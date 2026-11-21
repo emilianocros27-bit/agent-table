@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="900" height="430" role="img" aria-labelledby="t d">
+  <title id="t">Arquitectura de Mesa de Agentes</title>
+  <desc id="d">El navegador muestra terminales xterm.js. El backend local conecta cada terminal con un claude real en un PTY y su worktree, y recibe los hooks y las herramientas MCP de cada agente.</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #d7dae0; }
+    .bg { fill: #0e0f12; }
+    .box { fill: #16181d; stroke: #3a3e48; stroke-width: 1.5; }
+    .back { fill: #1b1d24; stroke: #d77757; stroke-width: 2; }
+    .h { font-size: 17px; font-weight: 700; }
+    .s { font-size: 12.5px; fill: #8a90a0; }
+    .chip { fill: #23262e; stroke: #3a3e48; }
+    .c { font-size: 12.5px; }
+    .line { fill: none; stroke: #3a3e48; stroke-width: 2; }
+    .dash { fill: none; stroke: #e0b252; stroke-width: 1.6; stroke-dasharray: 5 5; animation: flow 1.2s linear infinite; }
+    .cap { font-size: 12px; fill: #8a90a0; }
+    @keyframes flow { to { stroke-dashoffset: -20; } }
+    @keyframes pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+    .live { animation: pulse 2.4s ease-in-out infinite; }
+  </style>
+  <rect class="bg" width="900" height="430" rx="14"/>
+
+  <!-- Navegador -->
+  <rect class="box" x="24" y="150" width="190" height="130" rx="12"/>
+  <text class="h" x="119" y="186" text-anchor="middle">Navegador</text>
+  <text class="s" x="119" y="208" text-anchor="middle">React + xterm.js</text>
+  <text class="s" x="119" y="228" text-anchor="middle">una terminal por agente</text>
+  <text class="s" x="119" y="248" text-anchor="middle">bandeja · tareas · mensajes</text>
+
+  <!-- Backend -->
+  <rect class="back" x="340" y="40" width="220" height="350" rx="14"/>
+  <text class="h" x="450" y="72" text-anchor="middle">Backend local</text>
+  <text class="s" x="450" y="92" text-anchor="middle">127.0.0.1 · token por ejecución</text>
+  <rect class="chip" x="360" y="112" width="180" height="44" rx="8"/>
+  <text class="c" x="450" y="139" text-anchor="middle">PTYs (node-pty)</text>
+  <rect class="chip" x="360" y="168" width="180" height="44" rx="8"/>
+  <text class="c" x="450" y="195" text-anchor="middle">Hooks · bandeja de permisos</text>
+  <rect class="chip" x="360" y="224" width="180" height="44" rx="8"/>
+  <text class="c" x="450" y="251" text-anchor="middle">Buzón · tareas · resultado</text>
+  <rect class="chip" x="360" y="280" width="180" height="44" rx="8"/>
+  <text class="c" x="450" y="307" text-anchor="middle">Misiones · worktrees git</text>
+  <text class="s" x="450" y="354" text-anchor="middle">estado en ./data (JSON)</text>
+
+  <!-- Agentes -->
+  <g>
+    <rect class="box" x="690" y="36" width="190" height="96" rx="12"/>
+    <text class="h" x="785" y="68" text-anchor="middle">claude · Coordinador</text>
+    <text class="s" x="785" y="90" text-anchor="middle">PTY + worktree propio</text>
+    <text class="s" x="785" y="110" text-anchor="middle">rama mesa/…/coordinador</text>
+    <rect class="box" x="690" y="167" width="190" height="96" rx="12"/>
+    <text class="h" x="785" y="199" text-anchor="middle">claude · Rol A</text>
+    <text class="s" x="785" y="221" text-anchor="middle">PTY + worktree propio</text>
+    <text class="s" x="785" y="241" text-anchor="middle">rama mesa/…/rol-a</text>
+    <rect class="box" x="690" y="298" width="190" height="96" rx="12"/>
+    <text class="h" x="785" y="330" text-anchor="middle">claude · Rol B</text>
+    <text class="s" x="785" y="352" text-anchor="middle">PTY + worktree propio</text>
+    <text class="s" x="785" y="372" text-anchor="middle">rama mesa/…/rol-b</text>
+  </g>
+
+  <!-- Conexiones -->
+  <path id="n1" class="line" d="M214 215 H340"/>
+  <path id="a1" class="line" d="M560 84 H690"/>
+  <path id="a2" class="line" d="M560 215 H690"/>
+  <path id="a3" class="line" d="M560 346 H690"/>
+  <path class="dash" d="M690 100 H560"/>
+  <path class="dash" d="M690 231 H560"/>
+  <path class="dash" d="M690 362 H560"/>
+
+  <!-- Bytes crudos navegador -> backend -> agentes y vuelta -->
+  <circle r="5" fill="#d77757"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0s"><mpath href="#n1"/></animateMotion></circle>
+  <circle r="5" fill="#4cc38a"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.3s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#n1"/></animateMotion></circle>
+  <circle r="5" fill="#d77757"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s"><mpath href="#a1"/></animateMotion></circle>
+  <circle r="5" fill="#d77757"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s"><mpath href="#a2"/></animateMotion></circle>
+  <circle r="5" fill="#d77757"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.2s"><mpath href="#a3"/></animateMotion></circle>
+
+  <text class="cap" x="277" y="203" text-anchor="middle">bytes del PTY,</text>
+  <text class="cap" x="277" y="239" text-anchor="middle">sin tocar</text>
+  <text class="cap live" x="625" y="76" text-anchor="middle">teclas / resize</text>
+  <text class="cap live" x="625" y="122" text-anchor="middle">hooks + MCP</text>
+
+  <!-- Leyenda -->
+  <circle cx="30" cy="402" r="5" fill="#d77757"/><text class="cap" x="42" y="406">tráfico de terminal (entrada y salida)</text>
+  <line x1="300" y1="402" x2="330" y2="402" stroke="#e0b252" stroke-width="1.6" stroke-dasharray="5 5"/><text class="cap" x="338" y="406">eventos de los agentes: hooks y herramientas MCP</text>
+</svg>
